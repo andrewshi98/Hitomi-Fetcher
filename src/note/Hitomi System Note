@@ -1,0 +1,59 @@
+Hitomi System Note
+Global.\[1-9]*\.index - The tag tree for searching.
+
+Format:
+Constant Requirement:
+	B
+	max_node_size
+	tag_index_version - Need xhr request.
+	galleries_index_version - Need xhr request.
+	Those constant can be obtained or updated in https://ltn.hitomi.la/searchlib.js
+Not Galleries:
+	ltn.hitomi.la/tagindex/{[Global/Female/Male/Language/Tag/Series/Group]}.{tag_index_version}.index - Large B Tree
+Galleries:
+	ltn.hitomi.la/galleriesindex/galleries.{tag_index_version}.index - Very Large B Tree.
+
+	Data is big-endian
+	Number of Subnode Addresses = B(16) + 1 - (17)
+	From 0 to max_node_size (464 as of now).
+	As Uint8Array - nodedata.
+	* Decode nodedata - give Node Data:
+		Number Of Keys : Int32
+		LOOP number_of_keys:
+			Key Size : Int32 - Key size is smaller than 33
+			key : Key Size ({Key Size} bytes)
+		Number Of Datas : Int32
+		LOOP number_of_datas:
+			Offset : Uint64
+			Length : Int32
+		LOOP Number of Subnode Addresses:
+			Subnode Address : Uint64
+	Node Data structure - Not Galleries:
+		Keys:
+			Giant Tree of All Possible Search Terms. 5 Uint8 Numbers, total 32 bits.
+		Datas:
+			Given Offset - Where data is stored
+			      Length - The length of this data block.
+		Subnode Addresses:
+			Addresses of Subnodes, each of them represent subnode which all its sub keys are inbetween two parent keys.
+
+	For Each Data, at {Offset} of NON gallary file:
+		Number of Suggestion : Int32
+		LOOP Number of Suggestion:
+			Length : Int32
+			LOOP Length:
+				Char of Fields : Uint8 as CharCode
+			Length : Int32
+			LOOP Length:
+				Char of Tag : Uint8 as CharCode
+			Tag Count : Int32
+
+	For Each Data, at {Offset} of Gallery file:
+		Number of Gallery ID : Int32
+		LOOP Number of Gallery ID:
+			Gallery ID : Int32
+
+	Area could only be empty when specifying language option.
+
+
+

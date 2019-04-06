@@ -1,0 +1,24 @@
+{
+  "name": "hitomi-fetcher",
+  "version": "1.0.0",
+  "description": "fetch hitomi",
+  "main": "lib/hitomi-fetcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewshi98/Hitomi-Fetcher.git"
+  },
+  "author": "Andrew Shi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewshi98/Hitomi-Fetcher/issues"
+  },
+  "homepage": "https://github.com/andrewshi98/Hitomi-Fetcher#readme",
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "request": "2.88.0",
+    "request-progress": "3.0.0"
+  }
+}
